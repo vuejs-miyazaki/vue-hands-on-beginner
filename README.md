@@ -48,6 +48,11 @@
 - データにより View を操作する
 - イベント発火時にデータを操作し、View を変える
 
-## Let's Hands On!
+## Hands-on Practice
 
 実際に制作してみましょう！
+
+### その前に
+
+- エディター：[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) & Vue VS Code Extension Pack
+- デバッガー：[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja)
