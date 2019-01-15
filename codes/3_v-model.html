@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Vue App
+    </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.19/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        入力中： {{ inputtingData }}
+      </div>
+      <div>
+        入力されたデータ： {{ inputData }}
+      </div>
+      <div>
+        <input type="text"
+               v-model="inputtingData"
+        >
+        <button v-bind:disabled="isDisabled"
+                v-bind:class="classEnabled"
+                v-on:click="applyData"
+        >
+          {{ label }}
+        </button>
+        <!-- <button v-if="isDisabled"> -->
+        <!-- <button v-show="isDisabled"
+                v-on:click="changeDisabled"
+        >
+          解除
+        </button> -->
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        data: function() {
+          return {
+            // label: 'クリック！',
+            isDisabled: false,
+            inputtingData: '',
+            inputData: ''
+          }
+        },
+        computed: {
+          label: function() {
+            if (this.isDisabled) {
+              // return 'クリックできません';
+              return '送信中';
+            }
+
+            // return 'クリック！';
+            return 'データを登録';
+          },
+          classEnabled: function() {
+            return {
+              enabled: !this.isDisabled,
+              disabled: this.isDisabled
+            }
+          }
+        },
+        methods: {
+          changeDisabled: function() {
+            this.isDisabled = !this.isDisabled;
+          },
+          applyData: function() {
+            var self = this;
+            var waitingTime = 500;
+
+            self.changeDisabled();
+
+            setTimeout(function() {
+              self.inputData = self.inputtingData;
+              self.inputtingData = '';
+              self.changeDisabled();
+            }, waitingTime);
+          }
+        }
+      }).$mount('#app');
+    </script>
+
+    <style>
+      .enabled {
+        font-weight: bold;
+      }
+      .disabled {
+        color: #666;
+      }
+    </style>
+  </body>
+</html>

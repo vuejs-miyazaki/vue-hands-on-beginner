@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Vue App
+    </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.19/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <button v-bind:disabled="isDisabled"
+                v-bind:class="classEnabled"
+                v-on:click="changeDisabled"
+        >
+          {{ label }}
+        </button>
+        <!-- <button v-if="isDisabled"> -->
+        <button v-if="isDisabled"
+                v-on:click="changeDisabled"
+        >
+          解除
+        </button>
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        data: function() {
+          return {
+            // label: 'クリック！',
+            isDisabled: false
+          }
+        },
+        computed: { // キャッシュされる
+          label: function() {
+            if (this.isDisabled) {
+              return 'クリックできません';
+            }
+
+            return 'クリック！';
+          },
+          classEnabled: function() {
+            return {
+              enabled: !this.isDisabled,
+              disabled: this.isDisabled
+            }
+          }
+        },
+        methods: { // キャッシュされない
+          changeDisabled: function(event) {
+            this.isDisabled = !this.isDisabled
+            console.log(event.target.value)
+          }
+        }
+      }).$mount('#app');
+    </script>
+
+    <style>
+      .enabled {
+        font-weight: bold;
+      }
+      .disabled {
+        color: #666;
+      }
+    </style>
+  </body>
+</html>
