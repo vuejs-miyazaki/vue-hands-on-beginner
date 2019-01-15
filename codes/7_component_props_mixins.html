@@ -19,10 +19,10 @@
         TODOの数：{{ todoList.length }}
       </p>
       <ul class="todo-list">
-        <m-todo-item v-for="todo in todoList"
+        <todo-item v-for="todo in todoList"
                     :key="todo.id"
                     :todo-data="todo"
-        ></m-todo-item>
+        ></todo-item>
 
         <!-- <li class="todo"
             v-for="todo in todoList"
@@ -40,12 +40,12 @@
         <input type="text"
                v-model="inputtingData"
         >
-        <a-button :disabled="isDisabled"
+        <basic-button :disabled="isDisabled"
                   :class="classEnabled"
                   @click-event="applyData"
         >
           {{ label }}
-        </a-button>
+        </basic-button>
         <!-- <button :disabled="isDisabled"
                 :class="classEnabled"
                 @click="applyData"
@@ -86,7 +86,7 @@
       };
 
       Vue.component(
-        'a-button',
+        'basic-button',
         {
           template: (function() {/*
             <button @click="clickButton">
@@ -104,7 +104,7 @@
       );
 
       Vue.component(
-        'm-todo-item',
+        'todo-item',
         {
           template: (function() {/*
             <li class="todo">

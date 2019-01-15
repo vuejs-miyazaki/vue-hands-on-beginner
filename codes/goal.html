@@ -9,29 +9,16 @@
   </head>
   <body>
     <div id="app">
-      <!-- <div>
-        入力中： {{ inputtingData }}
-      </div> -->
-      <!-- <div>
-        入力されたデータ： {{ inputData }}
-      </div> -->
-      <p>
-        TODOの数：{{ todoList.length }}
-      </p>
-      <ul class="todo-list">
-        <li class="todo"
-            v-for="todo in todoList"
-            :key="todo.id"
-        >
-          <p class="todo-content">
-            {{ todo.content }}
-          </p>
-          <p class="todo-created-at">
-            {{ todo.createdAt | formatDatetime }}
-          </p>
-        </li>
-      </ul>
-      <div>
+      <transition-group tag="ul"
+                        name="list"
+                        class="todo-list"
+      >
+        <todo-item v-for="todo in todoList"
+                     :key="todo.id"
+                     :todo-data="todo"
+        ></todo-item>
+      </transition-group>
+      <div class="todo-console">
         <input type="text"
                v-model="inputtingData"
         >
@@ -41,121 +28,11 @@
         >
           {{ label }}
         </basic-button>
-        <!-- <button :disabled="isDisabled"
-                :class="classEnabled"
-                @click="applyData"
-        >
-          {{ label }}
-        </button> -->
-        <!-- <button v-if="isDisabled"> -->
-        <!-- <button v-show="isDisabled"
-                v-on:click="changeDisabled"
-        >
-          解除
-        </button> -->
       </div>
     </div>
 
     <script>
-      Vue.component(
-        'basic-button',
-        {
-          template: (function() {/*
-            <button @click="clickButton">
-              <slot>
-                ボタン
-              </slot>
-            </button>
-          */}).toString().split('\n').slice(1, -1).join('\n'),
-          methods: {
-            clickButton: function(event) {
-              this.$emit('click-event', event);
-            }
-          }
-        }
-      );
-
-      new Vue({
-        data: function() {
-          return {
-            // label: 'クリック！',
-            isDisabled: false,
-            inputtingData: '',
-            inputData: '',
-            todoList: [
-              {
-                id: 2,
-                content: 'TODO2',
-                createdAt: 1544498382547
-              },
-              {
-                id: 1,
-                content: 'TODO1',
-                createdAt: 1544498306379
-              },
-            ]
-          }
-        },
-        computed: {
-          label: function() {
-            if (this.isDisabled) {
-              // return 'クリックできません';
-              return '送信中';
-            }
-
-            // return 'クリック！';
-            return 'データを登録';
-          },
-          classEnabled: function() {
-            return {
-              enabled: !this.isDisabled,
-              disabled: this.isDisabled
-            }
-          }
-        },
-        created: function() {
-          console.log('created');
-          console.log(this.todoList);
-          console.log(this.$el);
-        },
-        mounted: function() {
-          console.log('mounted');
-          console.log(this.$el);
-
-          var newElem = document.createElement('div');
-          newElem.textContent = '追加要素';
-          this.$el.insertBefore(
-            newElem,
-            this.$el.firstChild
-          );
-        },
-        methods: {
-          changeDisabled: function() {
-            this.isDisabled = !this.isDisabled;
-          },
-          applyData: function(aug) {
-            console.log(aug)
-
-            var self = this;
-            var waitingTime = 500;
-
-            self.changeDisabled();
-
-            setTimeout(function() {
-              // self.inputData = self.inputtingData;
-
-              var todo = {
-                id: self.todoList.length + 1,
-                content: self.inputtingData,
-                createdAt: Date.now()
-              };
-
-              self.todoList.unshift(todo);
-              self.inputtingData = '';
-              self.changeDisabled();
-            }, waitingTime);
-          },
-        },
+      var formatter = {
         filters: {
           formatDatetime: function(value) {
             value = parseInt(value);
@@ -176,10 +53,120 @@
             return [year, month, date].join('/') + ' ' + [hour, min, sec].join(':');
           }
         }
+      };
+
+      Vue.component(
+        'basic-button',
+        {
+          template: (function() {/*
+            <button @click="clickButton">
+              <slot>
+                ボタン
+              </slot>
+            </button>
+          */}).toString().split('\n').slice(1, -1).join('\n'),
+          methods: {
+            clickButton: function(event) {
+              this.$emit('click-event', event.target);
+            }
+          }
+        }
+      );
+
+      Vue.component(
+        'todo-item',
+        {
+          template: (function() {/*
+            <li class="todo">
+              <p class="todo-content">
+                {{ todoData.content }}
+              </p>
+              <p class="todo-created-at">
+                {{ todoData.createdAt | formatDatetime }}
+              </p>
+            </li>
+          */}).toString().split('\n').slice(1, -1).join('\n'),
+          props: {
+            todoData: {
+              type: Object
+            },
+          },
+          mixins: [
+            formatter
+          ]
+        }
+      );
+
+      new Vue({
+        data: function() {
+          return {
+            isDisabled: false,
+            inputtingData: '',
+            inputData: '',
+            todoList: [
+              {
+                id: 2,
+                content: 'TODO2',
+                createdAt: 1544498382547
+              },
+              {
+                id: 1,
+                content: 'TODO1',
+                createdAt: 1544498306379
+              },
+            ]
+          }
+        },
+        computed: {
+          label: function() {
+            if (this.isDisabled) {
+              return '送信中';
+            }
+
+            return 'データを登録';
+          },
+          classEnabled: function() {
+            return {
+              enabled: !this.isDisabled,
+              disabled: this.isDisabled
+            }
+          }
+        },
+        created: function() {
+        },
+        mounted: function() {
+        },
+        methods: {
+          changeDisabled: function() {
+            this.isDisabled = !this.isDisabled;
+          },
+          applyData: function(value) {
+            var self = this;
+            var waitingTime = 500;
+
+            self.changeDisabled();
+
+            setTimeout(function() {
+              var todo = {
+                id: self.todoList.length + 1,
+                content: self.inputtingData,
+                createdAt: Date.now()
+              };
+
+              self.todoList.unshift(todo);
+              self.inputtingData = '';
+              self.changeDisabled();
+            }, waitingTime);
+          },
+        }
       }).$mount('#app');
     </script>
 
     <style>
+      #app {
+        margin: 0;
+        padding: 10px;
+      }
       .enabled {
         font-weight: bold;
       }
@@ -192,18 +179,54 @@
         list-style: none;
       }
       .todo {
-        border: 1px solid #789;
-        margin: 8px 0 0;
-        padding: 8px;
-        background: #def;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #E1F5FE;
+      }
+      .todo + .todo {
+        margin: 10px 0 0;
       }
       .todo-content {
         margin: 0;
+        padding: 15px 10px;
+        font-size: 14px;
       }
       .todo-created-at {
-        margin: 8px 0 0;
+        margin: 0;
+        padding: 8px 10px;
         color: #666;
         font-size: .8rem;
+      }
+      .todo-console {
+        margin: 15px 0 0;
+        padding: 10px;
+        background: #B3E5FC;
+      }
+      .todo-console input {
+        box-sizing: border-box;
+        width: calc(100% - 8em);
+      }
+
+      /* アニメーション */
+      .list-enter-active,
+      .list-leave-active {
+        transition: transform .5s, opacity .5s;
+      }
+      .list-move:not(.list-leave-active) {
+        transition: transform .5s;
+      }
+      .list-enter {
+        opacity: 0;
+        transform: translateY(-20px) scale(.7);
+      }
+      .list-leave-to {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      .list-leave-active {
+        position: absolute;
+        width: calc(100% - 20px);
       }
     </style>
   </body>
