@@ -3,12 +3,30 @@
   <head>
     <meta charset="utf-8">
     <title>
-      Vue App
+      Vue Hands-on Practice
     </title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.19/dist/vue.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+
+      .enabled {
+        font-weight: bold;
+      }
+      .disabled {
+        color: #666;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
+    <div id="app"
+         v-cloak
+    >
       <div>
         <button v-bind:disabled="isDisabled"
                 v-bind:class="classEnabled"
@@ -25,6 +43,7 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
     <script>
       new Vue({
         data: function() {
@@ -56,14 +75,5 @@
         }
       }).$mount('#app');
     </script>
-
-    <style>
-      .enabled {
-        font-weight: bold;
-      }
-      .disabled {
-        color: #666;
-      }
-    </style>
   </body>
 </html>

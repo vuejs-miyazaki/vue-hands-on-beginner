@@ -3,12 +3,64 @@
   <head>
     <meta charset="utf-8">
     <title>
-      Vue App
+      Vue Hands-on Practice
     </title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.19/dist/vue.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+
+      #app {
+        position: relative;
+        width: 560px;
+        height: 100vh;
+        margin: 0 auto;
+      }
+
+      .enabled {
+        font-weight: bold;
+      }
+      .disabled {
+        color: #666;
+      }
+
+      .todo-list {
+        margin: 0;
+        padding: 0;
+      }
+
+      .todo {
+        list-style: none;
+        border-radius: 8px;
+        width: 100%;
+        margin: 10px 0 0;
+        background: #e1f5fe;
+      }
+
+      .todo-content {
+        margin: 0;
+        padding: 10px 10px 0;
+        font-size: 14px;
+        word-break: break-all;
+      }
+
+      .todo-created-at {
+        margin: 0;
+        padding: 10px;
+        color: #666;
+        font-size: 0.8rem;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
+    <div id="app"
+          v-cloak
+    >
       <!-- <div>
         入力中： {{ inputtingData }}
       </div> -->
@@ -50,6 +102,8 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.23.0/min/moment.min.js"></script>
     <script>
       new Vue({
         data: function() {
@@ -76,7 +130,7 @@
           label: function() {
             if (this.isDisabled) {
               // return 'クリックできません';
-              return '送信中';
+              return '登録中';
             }
 
             // return 'クリック！';
@@ -95,7 +149,7 @@
           },
           applyData: function() {
             var self = this;
-            var waitingTime = 500;
+            var waitingTime = 300;
 
             self.changeDisabled();
 
@@ -116,53 +170,25 @@
         },
         filters: {
           formatDatetime: function(value) {
-            value = parseInt(value);
+            return moment(value).format('YYYY/MM/DD HH:mm:ss');
 
-            var _format2digit = function(num) {
-              return ('0' + num).slice(-2);
-            }
+            // var _format2digit = function(num) {
+            //   return ('0' + num).slice(-2);
+            // }
 
-            var d = new Date(value);
+            // var d = new Date(value);
 
-            var year  = d.getFullYear();
-            var month = _format2digit(d.getMonth() + 1);
-            var date  = _format2digit(d.getDate());
-            var hour  = _format2digit(d.getHours());
-            var min   = _format2digit(d.getMinutes());
-            var sec   = _format2digit(d.getSeconds());
+            // var year  = d.getFullYear();
+            // var month = _format2digit(d.getMonth() + 1);
+            // var date  = _format2digit(d.getDate());
+            // var hour  = _format2digit(d.getHours());
+            // var min   = _format2digit(d.getMinutes());
+            // var sec   = _format2digit(d.getSeconds());
 
-            return [year, month, date].join('/') + ' ' + [hour, min, sec].join(':');
+            // return [year, month, date].join('/') + ' ' + [hour, min, sec].join(':');
           }
         }
       }).$mount('#app');
     </script>
-
-    <style>
-      .enabled {
-        font-weight: bold;
-      }
-      .disabled {
-        color: #666;
-      }
-      .todo-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      .todo {
-        border: 1px solid #456;
-        margin: 8px 0 0;
-        padding: 8px;
-        background: #def;
-      }
-      .todo-content {
-        margin: 0;
-      }
-      .todo-created-at {
-        margin: 8px 0 0;
-        color: #666;
-        font-size: .8rem;
-      }
-    </style>
   </body>
 </html>

@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>
-      Vue App
+      Vue Hands-on Practice
     </title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.19/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
   </head>
   <body>
     <div id="app">
@@ -35,12 +35,12 @@
         <input type="text"
                v-model="inputtingData"
         >
-        <basic-button :disabled="isDisabled"
+        <button-basic :disabled="isDisabled"
                   :class="classEnabled"
                   @click-event="applyData"
         >
           {{ label }}
-        </basic-button>
+        </button-basic>
         <!-- <button :disabled="isDisabled"
                 :class="classEnabled"
                 @click="applyData"
@@ -58,7 +58,7 @@
 
     <script>
       Vue.component(
-        'basic-button',
+        'button-basic',
         {
           template: (function() {/*
             <button @click="clickButton">
@@ -100,7 +100,7 @@
           label: function() {
             if (this.isDisabled) {
               // return 'クリックできません';
-              return '送信中';
+              return '登録中';
             }
 
             // return 'クリック！';
@@ -137,7 +137,7 @@
             console.log(aug)
 
             var self = this;
-            var waitingTime = 500;
+            var waitingTime = 300;
 
             self.changeDisabled();
 

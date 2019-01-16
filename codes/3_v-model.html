@@ -3,12 +3,30 @@
   <head>
     <meta charset="utf-8">
     <title>
-      Vue App
+      Vue Hands-on Practice
     </title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.19/dist/vue.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+
+      .enabled {
+        font-weight: bold;
+      }
+      .disabled {
+        color: #666;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
+    <div id="app"
+          v-cloak
+    >
       <div>
         入力中： {{ inputtingData }}
       </div>
@@ -34,6 +52,7 @@
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
     <script>
       new Vue({
         data: function() {
@@ -48,7 +67,7 @@
           label: function() {
             if (this.isDisabled) {
               // return 'クリックできません';
-              return '送信中';
+              return '登録中';
             }
 
             // return 'クリック！';
@@ -67,7 +86,7 @@
           },
           applyData: function() {
             var self = this;
-            var waitingTime = 500;
+            var waitingTime = 300;
 
             self.changeDisabled();
 
@@ -80,14 +99,5 @@
         }
       }).$mount('#app');
     </script>
-
-    <style>
-      .enabled {
-        font-weight: bold;
-      }
-      .disabled {
-        color: #666;
-      }
-    </style>
   </body>
 </html>
