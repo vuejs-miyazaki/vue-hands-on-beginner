@@ -8,7 +8,7 @@
 ### JavaScript を使う目的
 
 - DOM を操作
-- 非同期で HTTP 通信を行う（Ajax）
+- 非同期でデータを取得
 
   👉 アプリケーションを作る
 
@@ -55,4 +55,4 @@
 ### その前に
 
 - エディター：[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) & Vue VS Code Extension Pack
-- デバッガー：[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja)
+- デバッガー：[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja) for Chrome

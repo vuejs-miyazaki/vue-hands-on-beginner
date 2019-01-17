@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Vue Hands-on Practice
+    </title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+
+      #app {
+        position: relative;
+        width: 560px;
+        height: 100vh;
+        margin: 0 auto;
+      }
+
+      .enabled {
+        font-weight: bold;
+      }
+      .disabled {
+        color: #666;
+      }
+
+      .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 4px;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .button .label {
+        line-height: 1;
+      }
+
+      .button.basic {
+        background: #1f74ff;
+        color: #fff;
+      }
+
+      .input {
+        outline: none;
+      }
+
+      .input.text {
+        border: none;
+        padding: 5px;
+      }
+
+      .todo-list {
+        overflow-y: scroll;
+        height: calc(100vh - 48px);
+        margin: 0;
+        padding: 0 15px 15px 0;
+      }
+
+      .todo {
+        list-style: none;
+        border-radius: 8px;
+        width: 100%;
+        margin: 10px 0 0;
+        background: #e1f5fe;
+      }
+
+      .todo-content {
+        margin: 0;
+        padding: 10px 10px 0;
+        font-size: 14px;
+        word-break: break-all;
+      }
+
+      .todo-created-at {
+        margin: 0;
+        padding: 10px;
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .todo-console {
+        display: flex;
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        box-sizing: border-box;
+        width: 100%;
+        height: 48px;
+        margin: 0;
+        padding: 10px;
+        background: #B3E5FC;
+      }
+      .todo-console .input {
+        flex: 1;
+        box-sizing: border-box;
+      }
+      .todo-console .button {
+        margin-left: 10px;
+        width: 8em;
+      }
+
+      /* アニメーション */
+      .list-enter-active,
+      .list-leave-active {
+        transition: transform .5s, opacity .5s;
+      }
+      .list-move {
+        transition: transform .5s;
+      }
+      .list-enter {
+        opacity: 0;
+        transform: translateY(-20px) scale(.7);
+      }
+      .list-leave-to {
+        opacity: 0;
+        transform: scale(.7);
+      }
+      .list-leave-active {
+        position: absolute;
+        width: calc(100% - 15px * 2);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"
+          v-cloak
+    >
+      <transition-group tag="ul"
+                        name="list"
+                        class="todo-list"
+      >
+        <todo-item v-for="todo in todoList"
+                  :key="todo.id"
+                  :todo-data="todo"
+        ></todo-item>
+        <!-- <li class="todo"
+            v-for="todo in todoList"
+            :key="todo.id"
+        >
+          <p class="todo-content">
+            {{ todo.content }}
+          </p>
+          <p class="todo-created-at">
+            {{ todo.createdAt | formatDatetime }}
+          </p>
+        </li> -->
+      </transition-group>
+      <div class="todo-console">
+        <input type="text"
+                class="input text"
+                v-model="inputtingData"
+        >
+        <button-basic :disabled="isDisabled"
+                      class="button basic"
+                      :class="classEnabled"
+                      @click-event="applyData"
+                >
+          {{ label }}
+        </button-basic>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.23.0/min/moment.min.js"></script>
+    <script>
+      var todoData = [
+        {
+          id: 2,
+          content: 'TODO2',
+          createdAt: 1544498382547
+        },
+        {
+          id: 1,
+          content: 'TODO1',
+          createdAt: 1544498306379
+        },
+      ];
+
+      var formatter = {
+        filters: {
+          formatDatetime: function(value) {
+            return moment(value).format('YYYY/MM/DD HH:mm:ss');
+          }
+        }
+      };
+
+      Vue.component(
+        'button-basic',
+        {
+          template: (function() {/*
+            <button class="button basic"
+                    @click="clickButton"
+            >
+              <span class="label">
+                <slot>
+                  ボタン
+                </slot>
+              </span>
+            </button>
+          */}).toString().split('\n').slice(1, -1).join('\n'),
+          methods: {
+            clickButton: function(event) {
+              this.$emit('click-event');
+            }
+          }
+        }
+      );
+
+      Vue.component(
+        'todo-item',
+        {
+          template: (function() {/*
+            <li class="todo">
+              <p class="todo-content">
+                {{ todoData.content }}
+              </p>
+              <p class="todo-created-at">
+                {{ todoData.createdAt | formatDatetime }}
+              </p>
+            </li>
+          */}).toString().split('\n').slice(1, -1).join('\n'),
+          mixins: [
+            formatter
+          ],
+          props: {
+            todoData: {
+              type: Object
+            }
+          }
+        }
+      );
+
+      new Vue({
+        data: function() {
+          return {
+            isDisabled: false,
+            inputtingData: '',
+            inputData: '',
+            todoList: []
+          }
+        },
+        computed: {
+          label: function() {
+            if (this.isDisabled) {
+              return '登録中';
+            }
+
+            return 'データを登録';
+          },
+          classEnabled: function() {
+            return {
+              enabled: !this.isDisabled,
+              disabled: this.isDisabled
+            }
+          }
+        },
+        created: function() {
+          this.todoList = todoData;
+        },
+        mounted: function() {
+        },
+        methods: {
+          changeDisabled: function() {
+            this.isDisabled = !this.isDisabled;
+          },
+          applyData: function(aug) {
+            console.log(aug)
+
+            var self = this;
+            var waitingTime = 300;
+
+            self.changeDisabled();
+
+            setTimeout(function() {
+              var todo = {
+                id: self.todoList.length + 1,
+                content: self.inputtingData,
+                createdAt: Date.now()
+              };
+
+              self.todoList.unshift(todo);
+              self.inputtingData = '';
+              self.changeDisabled();
+            }, waitingTime);
+          },
+        },
+        // filters: {
+        //   formatDatetime: function(value) {
+        //     return moment(value).format('YYYY/MM/DD HH:mm:ss');
+        //   }
+        // }
+      }).$mount('#app');
+    </script>
+  </body>
+</html>
