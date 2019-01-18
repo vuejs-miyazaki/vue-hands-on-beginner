@@ -17,6 +17,7 @@
 
       #app {
         position: relative;
+        overflow: hidden;
         width: 560px;
         height: 100vh;
         margin: 0 auto;
@@ -26,7 +27,7 @@
         font-weight: bold;
       }
       .disabled {
-        color: #666;
+        opacity: .7;
       }
 
       .button {
@@ -144,7 +145,7 @@
       }
       .list-leave-to {
         opacity: 0;
-        transform: scale(.8);
+        transform: scale(.7);
       }
       .list-leave-active {
         position: absolute;
@@ -175,6 +176,8 @@
           createdAt: 1544498306379
         },
       ];
+
+      var keyTodo = 'todo';
 
       var formatter = {
         filters: {
@@ -409,7 +412,23 @@
           }
         },
         created: function() {
-          this.todoList = todoData;
+          var storedTodoList = localStorage.getItem(keyTodo);
+
+          if (storedTodoList) {
+            storedTodoList = JSON.parse(storedTodoList);
+            console.log({storedTodoList})
+          }
+          else {
+            storedTodoList = todoData;
+          }
+
+          this.todoList = storedTodoList;
+        },
+        watch: {
+          todoList: function(newVal) {
+            var storingTodoList = JSON.stringify(newVal);
+            localStorage.setItem(keyTodo, storingTodoList);
+          }
         }
       }).$mount('#app');
     </script>

@@ -17,6 +17,7 @@
 
       #app {
         position: relative;
+        overflow: hidden;
         width: 560px;
         height: 100vh;
         margin: 0 auto;
@@ -26,7 +27,7 @@
         font-weight: bold;
       }
       .disabled {
-        color: #666;
+        opacity: .7;
       }
 
       .button {
@@ -108,6 +109,33 @@
       }
 
       /* アニメーション */
+      .v-enter,
+      .v-leave-to {
+        opacity: 0;
+      }
+      .v-enter-active,
+      .v-leave-active {
+        transition: opacity 1s;
+      }
+      .v-leave-active {
+        position: absolute;
+      }
+
+      .slide-enter {
+        transform: translateX(100%);
+      }
+      .slide-leave-to {
+        transform: translateX(-100%);
+      }
+      .slide-enter-active,
+      .slide-leave-active {
+        transition: transform 1s;
+      }
+      .slide-leave-active {
+        position: absolute;
+        width: 100%;
+      }
+
       .list-enter-active,
       .list-leave-active {
         transition: transform .5s, opacity .5s;
@@ -133,9 +161,27 @@
     <div id="app"
           v-cloak
     >
-      <!-- <p>
-        TODOの数：{{ todoList.length }}
-      </p> -->
+      <button @click="isDisabled = !isDisabled">
+        クリック
+      </button>
+      <!-- <transition>
+        <p v-show="!isDisabled">
+          TODOの数：{{ todoList.length }}
+        </p>
+      </transition> -->
+      <transition name="slide">
+        <p v-if="!isDisabled"
+            key="a"
+        >
+          abc
+        </p>
+        <p v-else
+            key="x"
+        >
+          xyz
+        </p>
+      </transition>
+
       <transition-group tag="ul"
                         name="list"
                         class="todo-list"

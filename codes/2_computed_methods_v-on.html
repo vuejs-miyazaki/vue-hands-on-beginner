@@ -19,7 +19,7 @@
         font-weight: bold;
       }
       .disabled {
-        color: #666;
+        opacity: .7;
       }
     </style>
   </head>
@@ -35,11 +35,13 @@
           {{ label }}
         </button>
         <!-- <button v-if="isDisabled"> -->
+        <transition name="list">
         <button v-if="isDisabled"
                 v-on:click="changeDisabled"
         >
           解除
         </button>
+      </transition>
       </div>
     </div>
 
