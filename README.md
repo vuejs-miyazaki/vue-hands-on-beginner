@@ -61,7 +61,7 @@
 
   👉  他コンポーネントに依存させないことで、追加・削除などの改修がラクにできる
 
-👉  [参考：イメージで伝える「Vue.js とは」](https://lab.aratana.jp/entry/2017/12/09/000000)
+[参考：イメージで伝える「Vue.js とは」](https://lab.aratana.jp/entry/2017/12/09/000000)
 
 ## Hands-on Practice
 
