@@ -163,6 +163,92 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.23.0/min/moment.min.js"></script>
+
+    <script type="text/x-template"
+            id="tmp-button-basic"
+    >
+      <button class="button basic"
+              @click="clickButton"
+      >
+        <span class="label">
+          <slot>
+            ボタン
+          </slot>
+        </span>
+      </button>
+    </script>
+
+    <script type="text/x-template"
+            id="tmp-button-delete"
+    >
+      <button class="button delete"
+              @click="clickButton"
+      >
+        <span class="label">
+          <slot>
+            ×
+          </slot>
+        </span>
+      </button>
+    </script>
+
+    <script type="text/x-template"
+            id="tmp-input-text"
+    >
+      <input type="input"
+              class="input text"
+              :value="value"
+              :name="name"
+              :placeholder="placeholder"
+              @input="inputValue"
+      >
+    </script>
+
+    <script type="text/x-template"
+            id="tmp-todo-item"
+    >
+      <li class="todo">
+        <p class="todo-content"
+            :class="blankClass(todoData.content)"
+        >
+          {{ todoData.content }}
+        </p>
+        <p class="todo-created-at">
+          {{ todoData.createdAt | formatDatetime }}
+        </p>
+        <button-delete @delete-event="deleteSelf(todoData.id)" />
+      </li>
+    </script>
+
+    <script type="text/x-template"
+            id="tmp-todo-list"
+    >
+      <transition-group tag="ul"
+                        name="list"
+                        class="todo-list"
+      >
+        <todo-item v-for="todo in todoList"
+                    :key="todo.id"
+                    :todo-data="todo"
+                    @delete="deleteTodo"
+        ></todo-item>
+      </transition-group>
+    </script>
+
+    <script type="text/x-template"
+            id="tmp-todo-console"
+    >
+      <div class="todo-console">
+        <input-text v-model="inputtingData"></input-text>
+        <button-basic :disabled="isDisabled"
+                      :class="classEnabled"
+                      @click-event="applyData"
+        >
+          {{ label }}
+        </button-basic>
+      </div>
+    </script>
+
     <script>
       var todoData = [
         {
@@ -190,17 +276,7 @@
       Vue.component(
         'button-basic',
         {
-          template: (function() {/*
-            <button class="button basic"
-                    @click="clickButton"
-            >
-              <span class="label">
-                <slot>
-                  ボタン
-                </slot>
-              </span>
-            </button>
-          */}).toString().split('\n').slice(1, -1).join('\n'),
+          template: '#tmp-button-basic',
           methods: {
             clickButton: function(event) {
               this.$emit('click-event');
@@ -212,17 +288,7 @@
       Vue.component(
         'button-delete',
         {
-          template: (function() {/*
-            <button class="button delete"
-                    @click="clickButton"
-            >
-              <span class="label">
-                <slot>
-                  ×
-                </slot>
-              </span>
-            </button>
-          */}).toString().split('\n').slice(1, -1).join('\n'),
+          template: '#tmp-button-delete',
           methods: {
             clickButton: function(event) {
               this.$emit('delete-event');
@@ -234,15 +300,7 @@
       Vue.component(
         'input-text',
         {
-          template: (function() {/*
-            <input type="input"
-                   class="input text"
-                   :value="value"
-                   :name="name"
-                   :placeholder="placeholder"
-                   @input="inputValue"
-            >
-          */}).toString().split('\n').slice(1, -1).join('\n'),
+          template: '#tmp-input-text',
           props: {
             value: {},
             name: {
@@ -263,19 +321,7 @@
       Vue.component(
         'todo-item',
         {
-          template: (function() {/*
-            <li class="todo">
-              <p class="todo-content"
-                 :class="blankClass(todoData.content)"
-              >
-                {{ todoData.content }}
-              </p>
-              <p class="todo-created-at">
-                {{ todoData.createdAt | formatDatetime }}
-              </p>
-              <button-delete @delete-event="deleteSelf(todoData.id)" />
-            </li>
-          */}).toString().split('\n').slice(1, -1).join('\n'),
+          template: '#tmp-todo-item',
           mixins: [
             formatter
           ],
@@ -300,18 +346,7 @@
       Vue.component(
         'todo-list',
         {
-          template: (function() {/*
-            <transition-group tag="ul"
-                              name="list"
-                              class="todo-list"
-            >
-              <todo-item v-for="todo in todoList"
-                          :key="todo.id"
-                          :todo-data="todo"
-                          @delete="deleteTodo"
-              ></todo-item>
-            </transition-group>
-          */}).toString().split('\n').slice(1, -1).join('\n'),
+          template: '#tmp-todo-list',
           data: function() {
             return {
               todoList: this.$root.todoList
@@ -333,17 +368,7 @@
       Vue.component(
         'todo-console',
         {
-          template: (function() {/*
-            <div class="todo-console">
-              <input-text v-model="inputtingData"></input-text>
-              <button-basic :disabled="isDisabled"
-                            :class="classEnabled"
-                            @click-event="applyData"
-              >
-                {{ label }}
-              </button-basic>
-            </div>
-          */}).toString().split('\n').slice(1, -1).join('\n'),
+          template: '#tmp-todo-console',
           data: function() {
             return {
               isDisabled: false,
