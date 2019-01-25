@@ -69,5 +69,10 @@
 
 ### その前に
 
-- エディター：[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) & Vue VS Code Extension Pack
-- デバッガー：[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja) for Chrome
+**Vue 用デバッガ**：[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja) for Chrome or Firefox
+
+※ インストールしたら **devtools** の詳細設定で「ファイルの URL へのアクセスを許可する」を ON にしてください。
+
+![ファイルの URL へのアクセスを許可する](https://user-images.githubusercontent.com/3617124/51724845-964e1080-20a2-11e9-8d7a-6f36f31c24bb.png)
+
+**おすすめエディタ**：[Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code/) & Vue VS Code Extension Pack
