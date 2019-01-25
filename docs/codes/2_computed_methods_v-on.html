@@ -34,14 +34,14 @@
         >
           {{ label }}
         </button>
-        <!-- <button v-if="isDisabled"> -->
-        <transition name="list">
+        <!-- <p v-if="isDisabled">
+            {{ isDisabled }}
+        </p> -->
         <button v-if="isDisabled"
                 v-on:click="changeDisabled"
         >
           解除
         </button>
-      </transition>
       </div>
     </div>
 
