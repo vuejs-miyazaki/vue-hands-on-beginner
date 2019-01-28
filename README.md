@@ -69,7 +69,7 @@
 
 ### その前に
 
-**Vue 用デバッガ**：[Vue.js devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja) for Chrome or Firefox
+**Vue 用デバッガ**：Vue.js devtools for [Chrome](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd?hl=ja) or [Firefox](https://addons.mozilla.org/ja/firefox/addon/vue-js-devtools/)
 
 ※ インストールしたら **devtools** の詳細設定で「ファイルの URL へのアクセスを許可する」を ON にしてください。
 
