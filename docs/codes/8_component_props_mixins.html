@@ -161,7 +161,7 @@
         >
         <button-basic :disabled="isDisabled"
                       class="button basic"
-                      :class="classEnabled"
+                      :class="classState"
                       @click-event="applyData"
                 >
           {{ label }}
@@ -265,7 +265,7 @@
 
             return 'データを登録';
           },
-          classEnabled: function() {
+          classState: function() {
             return {
               enabled: !this.isDisabled,
               disabled: this.isDisabled

@@ -18,9 +18,9 @@
         <button v-bind:disabled="isDisabled">
           {{ label }}
         </button>
-        <button v-if="isDisabled">
-          解除
-        </button>
+        <p v-if="isDisabled">
+          {{ isDisabled }}
+        </p>
       </div>
     </div>
 

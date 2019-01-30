@@ -29,19 +29,19 @@
     >
       <div>
         <button v-bind:disabled="isDisabled"
-                v-bind:class="classEnabled"
+                v-bind:class="classState"
                 v-on:click="changeDisabled"
         >
           {{ label }}
         </button>
-        <!-- <button v-if="isDisabled"> -->
-        <transition name="list">
+        <!-- <p v-if="isDisabled">
+            {{ isDisabled }}
+        </p> -->
         <button v-if="isDisabled"
                 v-on:click="changeDisabled"
         >
           解除
         </button>
-      </transition>
       </div>
     </div>
 
@@ -62,7 +62,7 @@
 
             return 'クリック！';
           },
-          classEnabled: function() {
+          classState: function() {
             return {
               enabled: !this.isDisabled,
               disabled: this.isDisabled

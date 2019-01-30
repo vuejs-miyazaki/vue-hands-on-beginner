@@ -38,7 +38,7 @@
                v-model="inputtingData"
         >
         <button v-bind:disabled="isDisabled"
-                v-bind:class="classEnabled"
+                v-bind:class="classState"
                 v-on:click="applyData"
         >
           {{ label }}
@@ -71,7 +71,7 @@
             // return 'クリック！';
             return 'データを登録';
           },
-          classEnabled: function() {
+          classState: function() {
             return {
               enabled: !this.isDisabled,
               disabled: this.isDisabled
