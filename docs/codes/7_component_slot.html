@@ -176,6 +176,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2.23.0/min/moment.min.js"></script>
+
+    <script type="text/x-template"
+            id="tmp-button-basic"
+    >
+      <button class="button basic"
+              @click="clickButton"
+      >
+        <span class="label">
+          <slot>
+            ボタン
+          </slot>
+        </span>
+      </button>
+    </script>
+
     <script>
       var todoData = [
         {
@@ -193,17 +208,8 @@
       Vue.component(
         'button-basic',
         {
-          template: (function() {/*
-            <button class="button basic"
-                    @click="clickButton"
-            >
-              <span class="label">
-                <slot>
-                  ボタン
-                </slot>
-              </span>
-            </button>
-          */}).toString().split('\n').slice(1, -1).join('\n'),
+          // template: '<button class="button basic"><span class="label">ボタン</span></button>',
+          template: '#tmp-button-basic',
           methods: {
             clickButton: function(event) {
               this.$emit('click-event');
