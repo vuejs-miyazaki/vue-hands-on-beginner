@@ -67,6 +67,26 @@
       <!-- <div>
         入力されたデータ： {{ inputData }}
       </div> -->
+      <div>
+        <label v-for="value in checkList">
+          <input type="checkbox"
+                  v-model="checked"
+                  :value="value"
+          >
+          {{ value }}
+        </label>
+        <!-- <input type="checkbox"
+                v-model="checked"
+                value="2"
+        >
+        <input type="checkbox"
+                v-model="checked"
+                value="3"
+        > -->
+        <p v-show="isCheckedGTE2">
+          2つ以上チェックされました
+        </p>
+      </div>
       <p>
         TODOの数：{{ todoList.length }}
       </p>
@@ -105,6 +125,12 @@
             isDisabled: false,
             inputtingData: '',
             inputData: '',
+            checked: [],
+            checkList: [
+              1,
+              2,
+              3
+            ],
             todoList: [
               {
                 id: 2,
@@ -132,6 +158,9 @@
               enabled: !this.isDisabled,
               disabled: this.isDisabled
             }
+          },
+          isCheckedGTE2: function() {
+            return this.checked.length >= 2;
           }
         },
         methods: {

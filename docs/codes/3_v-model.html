@@ -49,6 +49,23 @@
           解除
         </button> -->
       </div>
+      <div>
+        <input type="checkbox"
+                v-model="checked"
+                value="1"
+        >
+        <input type="checkbox"
+                v-model="checked"
+                value="2"
+        >
+        <input type="checkbox"
+                v-model="checked"
+                value="3"
+        >
+        <p v-show="isCheckedGTE2">
+          2つ以上チェックされました
+        </p>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
@@ -58,7 +75,8 @@
           return {
             isDisabled: false,
             inputtingData: '',
-            inputData: ''
+            inputData: '',
+            checked: []
           }
         },
         computed: {
@@ -76,6 +94,9 @@
               enabled: !this.isDisabled,
               disabled: this.isDisabled
             }
+          },
+          isCheckedGTE2: function() {
+            return this.checked.length >= 2;
           }
         },
         methods: {
