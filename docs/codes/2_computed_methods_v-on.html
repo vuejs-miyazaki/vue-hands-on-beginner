@@ -70,9 +70,8 @@
           }
         },
         methods: { // キャッシュされない
-          changeDisabled: function(event) {
+          changeDisabled: function() {
             this.isDisabled = !this.isDisabled;
-            console.log(event.target);
           }
         }
       }).$mount('#app');
